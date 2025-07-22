@@ -1,8 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import "./CountryDetail.css"
-import { Link, useLocation, useOutletContext, useParams } from 'react-router';
+import { data, Link, useLocation,useParams } from 'react-router';
 import CountryDetailShimmer from './CountryDetailShimmer';
-import { ThemeContext } from '../contexts/ThemeContext';
+import { useTheme } from '../hooks/useTheme';
+
 
 export default function CountryDetail() {
 	const params = useParams();
@@ -15,20 +16,20 @@ export default function CountryDetail() {
 	// const countryName = new URLSearchParams(location.search).get('name');
 	const [countryData, setCountryData] = useState(null);
 	const [notFound, setNotFound] = useState(false);
-	const [isDark]=useContext(ThemeContext);
+	const [isDark]=useTheme();
 	function updateCountryData(country){
          		setCountryData({
-					name: country.name.common,
+					name: country.name.common||country.name,
 					img: country.flags.svg,
 					population: country.population.toLocaleString('en-IN'),
-					nativeName: Object.values(country.name.nativeName)[0].common,
+					nativeName: Object.values(country.name.nativeName||{})[0]?.common,
 					population: country.population.toLocaleString('en-IN'),
 					region: country.region,
 					subRegion: country.subregion,
 					capital: country.capital,
 					domain: (country.tld).join(', '),
-					currencies: Object.values(country.currencies).map((currency) => currency.name).join(', '),
-					languages: Object.values(country.languages).join(','),
+					currencies: Object.values(country.currencies).map((currency) => currency.name||{}).join(', '),
+					languages: Object.values(country.languages||{}).join(','),
 					borders: [],
 
 				});
@@ -81,11 +82,11 @@ export default function CountryDetail() {
 					<div className="country-text">
 						<h1 className="country-name">{countryData.name}</h1>
 						<div className="country-text-mid">
-							<p><b>Native Name:</b><span className="native-name">{countryData.nativeName}</span></p>
+							<p><b>Native Name:</b><span className="native-name">{countryData.nativeName||countryData.name}</span></p>
 							<p><b>Population:</b><span className="population">{countryData.population}</span></p>
 							<p><b>Region:</b><span className="region"></span>{countryData.region}</p>
 							<p><b>Sub Region:</b><span className="sub-region">{countryData.subRegion}</span></p>
-							<p><b>Capital:</b><span className="capital">{countryData.capital.join(",")}</span></p>
+							<p><b>Capital:</b><span className="capital">{countryData.capital?.join(",")}</span></p>
 							<p><b>Top Level Domain:</b><span className="domain">{countryData.domain}</span></p>
 							<p><b>Currencies:</b><span className="currencies">{countryData.currencies}</span></p>
 							<p><b>Languages:</b><span className="language">{countryData.languages}</span></p>

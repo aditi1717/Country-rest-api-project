@@ -1,15 +1,12 @@
-import { useContext } from "react";
-import { ThemeContext } from "../contexts/ThemeContext";
-
+import { useTheme } from "../hooks/useTheme";
 
 
 export default function Header() {
 
-  const [isDark,setIsDark]=useContext(ThemeContext);
+  const [isDark,setIsDark]=useTheme();
   
   // console.log(JSON.parse(localStorage.getItem("isDarkMode")));
  
-  
   return (
     <header className={`header ${isDark?"dark":""}`}>
         <h2 ><a href="/" className="title">Where in the world?</a></h2>
