@@ -8,7 +8,7 @@ export default function CountriesListShimmer() {
     <div className='countries-container'>
 
     { Array.from({length:10}).map((value,i)=>{
-      console.log(i);
+      // console.log(i);
       
             return (<div key={i} className="country-card shimmer-card"></div>)
     })}

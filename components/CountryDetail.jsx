@@ -1,24 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import "./CountryDetail.css"
-import { Link, useParams } from 'react-router';
+import { Link, useLocation, useParams } from 'react-router';
 import CountryDetailShimmer from './CountryDetailShimmer';
 
 export default function CountryDetail() {
 	const params = useParams();
+	const {state}=useLocation();
+	console.log(state);
+	
 	// console.log(params);
 
 
 	// const countryName = new URLSearchParams(location.search).get('name');
 	const [countryData, setCountryData] = useState(null);
 	const [notFound, setNotFound] = useState(false);
-
-	useEffect(() => {
-		fetch(`https://restcountries.com/v3.1/name/${params.country}?fullText=true`)
-			.then((response) => response.json())
-			.then(([country]) => {
-				// console.log(country.borders);
-
-				setCountryData({
+	function updateCountryData(country){
+         		setCountryData({
 					name: country.name.common,
 					img: country.flags.svg,
 					population: country.population.toLocaleString('en-IN'),
@@ -41,9 +38,22 @@ export default function CountryDetail() {
 						.then((res) => res.json())
 						.then(([borderCountry]) => borderCountry.name.common)
 				})).then((borders) => {
-					setCountryData((previousState) => ({ ...previousState, borders }))
+					setTimeout(()=>{
+						setCountryData((previousState) => ({ ...previousState, borders }))
+					})
 				})
+	}
 
+	useEffect(() => {
+		 if(state){
+        updateCountryData(state);
+		return;
+	}
+
+		fetch(`https://restcountries.com/v3.1/name/${params.country}?fullText=true`)
+			.then((response) => response.json())
+			.then(([country]) => {
+				updateCountryData(country)
 			})
 			.catch(() => {
 				setNotFound(true);
@@ -80,7 +90,7 @@ export default function CountryDetail() {
 						</div>
 						{countryData.borders.length !== 0 && <div className="border-countries">
 							<b>Border Countries:</b>
-							{countryData.borders.map((border) => <Link className='button' key={countryData.name} to={`/${border}`}>{border}</Link>)}
+							{countryData.borders.map((border,i) => <Link className='button' key={i} to={`/${border}`}>{border}</Link>)}
 						</div>}
 
 					</div>

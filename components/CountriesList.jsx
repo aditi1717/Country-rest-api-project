@@ -6,7 +6,7 @@ export default function CountriesContainer({ query,cregion }) {
 
   useEffect(() => {
     fetch(
-      "https://restcountries.com/v3.1/all?fields=name,capital,flags,population,region"
+      "https://restcountries.com/v3.1/all?fields=name,capital,flags,population,region,subregion,tld,currencies,languages,borders"
     )
       .then((response) => response.json())
       .then((data) => {
@@ -40,7 +40,7 @@ export default function CountriesContainer({ query,cregion }) {
           }).map((country) => {
             
 
-            return <CountryCard key={country.name.common} name={country.name.common} flag={country.flags.svg} population={country.population.toLocaleString("en-IN")} region={country.region} capital={country.capital?.[0]} />
+            return <CountryCard key={country.name.common} name={country.name.common} flag={country.flags.svg} population={country.population.toLocaleString("en-IN")} region={country.region} capital={country.capital?.[0]} data={country}/>
 
 
           })
