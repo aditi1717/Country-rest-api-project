@@ -15,7 +15,7 @@ export default function CountriesContainer({ query,cregion }) {
       });
   }, []
   )
-  console.log(cregion);
+  // console.log(cregion);
    
 
   // cregion == " " ? query == " " ?console.log("nothing fill"):console.log("only query fill") :console.log("cregion fill");
