@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import "./CountryDetail.css"
 import { Link, useParams } from 'react-router';
+import CountryDetailShimmer from './CountryDetailShimmer';
 
 export default function CountryDetail() {
 	const params = useParams();
@@ -54,7 +55,7 @@ export default function CountryDetail() {
 		return <div>Country not found</div>;
 	}
 
-	return countryData === null ? "loading..." : (
+	return countryData === null ? <CountryDetailShimmer/> :(
 		<>
 			<main>
 				<span onClick={() => {
@@ -83,8 +84,9 @@ export default function CountryDetail() {
 						</div>}
 
 					</div>
-				</div>
-			</main>
-		</>
-	)
+		</div>
+	</main>
+ 	</>
+)
 }
+ 
