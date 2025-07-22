@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import "./CountryDetail.css"
-import { Link, useLocation, useParams } from 'react-router';
+import { Link, useLocation, useOutletContext, useParams } from 'react-router';
 import CountryDetailShimmer from './CountryDetailShimmer';
 
 export default function CountryDetail() {
@@ -14,6 +14,7 @@ export default function CountryDetail() {
 	// const countryName = new URLSearchParams(location.search).get('name');
 	const [countryData, setCountryData] = useState(null);
 	const [notFound, setNotFound] = useState(false);
+	const [isDark]=useOutletContext();
 	function updateCountryData(country){
          		setCountryData({
 					name: country.name.common,
@@ -67,7 +68,7 @@ export default function CountryDetail() {
 
 	return countryData === null ? <CountryDetailShimmer/> :(
 		<>
-			<main>
+			<main className={`main ${isDark?"dark":""}`}>
 				<span onClick={() => {
 					history.back();
 				}} className="back-button"

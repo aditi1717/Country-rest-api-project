@@ -14,7 +14,11 @@ body{
     color: var(--text-color);
     
 }
- body.dark{
+main,header{
+    background-color:var(--background-color);
+    color: var(--text-color);
+}
+main.dark , header.dark{
     --background-color: hsl(207, 26%, 17%);
     --text-color: hsl(0, 100%, 100%);
     --element-color:hsl(209, 23%, 22%);
@@ -27,7 +31,9 @@ body{
     background-color: var(--element-color);
     padding: 16px 50px;
     box-shadow: 0px 2px 2px 0px var(--box-shadow);
-    
+    position: sticky;
+    top: 0;
+    z-index: 1;
 
 }
 .title{
@@ -43,7 +49,7 @@ body{
 }
 
 main{
-    margin: 50px;
+    padding: 50px;
 }
 
 .search-filter-container{

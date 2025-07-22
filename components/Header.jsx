@@ -1,20 +1,15 @@
-import { useState } from "react"
 
 
-export default function Header() {
 
-  const [isDark,setIsDark]=useState(JSON.parse(localStorage.getItem("isDarkMode")));
-  if(isDark){
-      document.body.classList.add('dark')
-  }
-  else{
-     document.body.classList.remove('dark')
-  }
+export default function Header({theme}) {
+
+  const [isDark,setIsDark]=theme;
+  
   // console.log(JSON.parse(localStorage.getItem("isDarkMode")));
  
   
   return (
-    <header className="header">
+    <header className={`header ${isDark?"dark":""}`}>
         <h2 ><a href="/" className="title">Where in the world?</a></h2>
         <p className="dark-mode" onClick={()=>{
           setIsDark(!isDark);
